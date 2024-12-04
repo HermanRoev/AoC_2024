@@ -1,3 +1,6 @@
+import time
+
+start = time.perf_counter()
 with open ('data.txt', 'r') as f:
     data = f.readlines()
 
@@ -29,6 +32,15 @@ for line in data:
     numbers = [int(x) for x in line.split(' ')]
     if check_increasing(numbers) or check_decreasing(numbers):
         total += 1
+
+print(total)
+print(time.perf_counter() - start)
+
+total = 0
+for line in data:
+    numbers = [int(x) for x in line.split(' ')]
+    if check_increasing(numbers) or check_decreasing(numbers):
+        total += 1
         continue
     for i in range(len(numbers)):
         testdata = numbers.copy()
@@ -38,3 +50,4 @@ for line in data:
             break
 
 print(total)
+print(time.perf_counter() - start)
