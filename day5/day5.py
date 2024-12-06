@@ -1,5 +1,6 @@
-import tqdm
+import time
 
+start = time.perf_counter()
 with open('data.txt') as f:
     data = f.read().split('\n')
 
@@ -13,10 +14,13 @@ for update in updates:
     ordered = True
     for i in range(len(update)):
         number = update[i]
-        for rule in rules:
+        if not ordered:
+            break
+        for before, after in rules:
             if not ordered:
                 break
-            before, after = rule
+            if number not in [before, after]:
+                continue
             if number == before:
                 for j in range(i):
                     if update[i-j] == after:
@@ -31,6 +35,8 @@ for update in updates:
         incorrect_updates.append(update)
 
 print(f'Total sum of all valid updates are {total_sum}')
+middle_time = time.perf_counter()
+print(f'Execution time: {middle_time - start}')
 
 total_sum = 0
 # Task 2
@@ -50,3 +56,4 @@ for update in incorrect_updates:
     total_sum += update[len(update) // 2]
 
 print(f'Total sum of all invalid updates are {total_sum}')
+print(f'Execution time: {time.perf_counter() - middle_time}')
