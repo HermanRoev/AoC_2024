@@ -21,15 +21,17 @@ def parse_input(input):
 
 
 def sort(input):
-    for i in tqdm(range(len(input))):
-        if input[i] == '.':
-            for j in range(len(input)):
-                if j+i == len(input) - 1:
-                    break
-                if input[-j-1] != '.':
-                    input[i], input[-j-1] = input[-j-1], input[i]
-                    break
-
+    left = 0
+    right = len(input) - 1
+    while left < right:
+        while left < right and input[left] != '.':
+            left += 1
+        while left < right and input[right] == '.':
+            right -= 1
+        if left < right:
+            input[left], input[right] = input[right], input[left]
+            left += 1
+            right -= 1
     return input
 
 
